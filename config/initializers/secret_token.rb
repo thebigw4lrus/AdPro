@@ -1,0 +1,1 @@
+AdPro::Application.config.secret_key_base = 'eabd32cef08172f70e89b121d845cac8580c61a7e1f6adcbdbf68b9d850e1f51b52498f618fca5d219b27b99367049adb2a5f786a2fb38070ed42676ac8bb71d'

@@ -89,5 +89,37 @@ module AdPro
 
       banner
     end
+
+    desc 'Create a Time Slot.'
+    params do
+      requires :campaign_id, type: Integer, desc: 'Campaign Id.'
+      requires :banner_id, type: Integer, desc: 'Banner Id.'
+      requires :slot, type: Integer, desc: 'Display Hour of the banner'
+    end
+    post '/campaigns/:campaign_id/banners/:banner_id/time_slots/:slot' do
+      banner = ::Banner.find(params[:banner_id])
+      campaign = ::Campaign.find(params[:campaign_id])
+
+      time_slot = TimeSlot.new(slot: params[:slot],
+                               banner: banner,
+                               campaign: campaign)
+
+      time_slot.save
+
+      time_slot
+    end
+
+    desc 'Delete a Time Slot.'
+    params do
+      requires :campaign_id, type: Integer, desc: 'Campaign Id.'
+      requires :banner_id, type: Integer, desc: 'Banner Id.'
+      requires :slot, type: Integer, desc: 'Display Hour of the banner'
+    end
+    delete '/campaigns/:campaign_id/banners/:banner_id/time_slots/:slot' do
+      time_slot = TimeSlot.find_by(slot: params[:slot],
+                                   banner_id: params[:banner_id],
+                                   campaign_id: params[:campaign_id])
+      time_slot.destroy
+    end
   end
 end

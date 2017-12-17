@@ -24,6 +24,20 @@ module AdPro
 
         campaign
       end
+
+      desc 'Update a given campaign.'
+      params do
+        requires :name, type: String, desc: 'Campaign name.'
+        requires :id, type: Integer, desc: 'Campaign id.'
+      end
+      route_param :id do
+        put do
+          campaign = ::Campaign.find(params[:id])
+          campaign.name = params[:name]
+
+          campaign
+        end
+      end
     end
   end
 end

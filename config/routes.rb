@@ -1,7 +1,8 @@
 AdPro::Application.routes.draw do
-  namespace :v1 do
-    resources :campaigns, except: [:new, :edit]
-  end
+  mount AdPro::API => '/'
+  #namespace :v1 do
+  #j  resources :campaigns, except: [:new, :edit]
+  #jend
   #resources :banners
 
   #resources :campaigns do

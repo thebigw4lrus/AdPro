@@ -1,7 +1,12 @@
 AdPro::Application.routes.draw do
-  root 'campaigns#index'
+  namespace :v1 do
+    resources :campaigns, except: [:new, :edit]
+  end
+  #resources :banners
 
-  resources :campaigns
-  resources :time_slots
-  resources :banners
+  #resources :campaigns do
+    #resources :banners do
+      #resources :time_slot
+    #end
+  #end
 end

@@ -42,5 +42,47 @@ module AdPro
         patch { update_campaign.call(params) }
       end
     end
+
+    resource :banners do
+      desc 'Get list of banners.'
+      get { ::Banner.all }
+
+      desc 'Get a given banners.'
+      params { requires :id, type: Integer, desc: 'Banner id.' }
+      route_param :id do
+        get { ::Banner.find(params[:id]) }
+      end
+
+      desc 'Create a banner.'
+      params do
+        requires :name, type: String, desc: 'Banner name.'
+        requires :url, type: String, desc: 'Banner url.'
+      end
+      post do
+        banner = ::Banner.new(name: params[:name], url: params[:url])
+        banner.save
+
+        banner
+      end
+
+      desc 'Update a given campaign.'
+      params do
+        requires :name, type: String, desc: 'Banner name.'
+        requires :url, type: String, desc: 'Banner url.'
+        requires :id, type: Integer, desc: 'Banner id.'
+      end
+      route_param :id do
+        update_banner = proc do |params|
+          banner = ::Banner.find(params[:id])
+          banner.name = params[:name]
+          banner.url = params[:url]
+
+          banner
+        end
+
+        put { update_banner.call(params) }
+        patch { update_banner.call(params) }
+      end
+    end
   end
 end

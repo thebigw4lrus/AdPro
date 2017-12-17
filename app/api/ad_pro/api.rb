@@ -31,12 +31,15 @@ module AdPro
         requires :id, type: Integer, desc: 'Campaign id.'
       end
       route_param :id do
-        put do
+        update_campaign = proc do |params|
           campaign = ::Campaign.find(params[:id])
           campaign.name = params[:name]
 
           campaign
         end
+
+        put { update_campaign.call(params) }
+        patch { update_campaign.call(params) }
       end
     end
   end

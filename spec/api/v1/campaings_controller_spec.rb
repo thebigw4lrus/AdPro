@@ -83,4 +83,33 @@ RSpec.describe V1::CampaignsController do
       expect(response).to have_http_status :not_found
     end
   end
+
+  describe 'PATCH /campaigns' do
+    it 'returns 200 if it tries to modify an existent campaign' do
+      Campaign.create(name: 'campaign1', id: 1)
+
+      parameters = { name: 'modified' }
+      patch('campaigns/1', parameters)
+
+      expect(response).to have_http_status :ok
+    end
+
+    it 'modifies succesfully an existing campaign' do
+      Campaign.create(name: 'campaign1', id: 1)
+
+      parameters = { name: 'modified' }
+      patch('campaigns/1', parameters)
+
+      json = JSON.parse(response.body)
+
+      expect(json).to include('name' => 'modified')
+    end
+
+    it 'returns 404 if it tries to modify an unexistent campaign' do
+      parameters = { name: 'modified' }
+      patch('campaigns/1', parameters)
+
+      expect(response).to have_http_status :not_found
+    end
+  end
 end

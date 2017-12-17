@@ -6,6 +6,10 @@ module AdPro
       error!('record not found', 404)
     end
 
+    rescue_from ActiveRecord::RecordNotUnique do
+      error!('this record already exists', 409)
+    end
+
     desc 'Get list of Campaigns.'
     get '/campaigns' do
       ::Campaign.all

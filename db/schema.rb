@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171216163546) do
+ActiveRecord::Schema.define(version: 20171217180808) do
 
   create_table "banners", force: true do |t|
     t.string   "name"
@@ -36,5 +36,6 @@ ActiveRecord::Schema.define(version: 20171216163546) do
 
   add_index "time_slots", ["banner_id"], name: "index_time_slots_on_banner_id", using: :btree
   add_index "time_slots", ["campaign_id"], name: "index_time_slots_on_campaign_id", using: :btree
+  add_index "time_slots", ["slot", "campaign_id", "banner_id"], name: "index_time_slots_on_slot_and_campaign_id_and_banner_id", unique: true, using: :btree
 
 end

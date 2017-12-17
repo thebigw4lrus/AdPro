@@ -13,6 +13,16 @@ RSpec.describe 'TimeSlot resource' do
       expect(json).to include('slot' => 7)
     end
 
+    it 'returns 409 if it tries to define an existent time_slot' do
+      campaign = Campaign.create(name: 'campaign1', id: 1)
+      banner = Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
+      TimeSlot.create(slot: 7, banner: banner, campaign: campaign)
+
+      post('campaigns/1/banners/2/time_slots/7')
+
+      expect(response).to have_http_status :conflict
+    end
+
     it 'deletes a time slot from an existing campaign/banner' do
       campaign = Campaign.create(name: 'campaign1', id: 1)
       banner = Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)

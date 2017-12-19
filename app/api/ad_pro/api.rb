@@ -42,7 +42,10 @@ module AdPro
         requires :time_slot, type: Integer, desc: 'Banner Time Slot.'
       end
     end
-    post('/campaigns/:id/banners') do
+    put('/campaigns/:id/banners') do
+      campaigns_banners.upsert(params[:id], params[:banners])
+    end
+    patch('/campaigns/:id/banners') do
       campaigns_banners.upsert(params[:id], params[:banners])
     end
 

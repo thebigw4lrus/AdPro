@@ -40,7 +40,7 @@ RSpec.describe V1::CampaignsController do
       expect(json).to eq(expected)
     end
 
-    it 'insert banners per campaign' do
+    it 'update banners assignation when there is no previous setup' do
       Campaign.create(name: 'campaign1', id: 1)
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
       Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
@@ -59,7 +59,7 @@ RSpec.describe V1::CampaignsController do
         ]
       }
 
-      post('campaigns/1/banners', input)
+      put('campaigns/1/banners', input)
 
       expected = {
         'id' => 1,

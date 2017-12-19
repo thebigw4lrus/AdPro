@@ -22,4 +22,5 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 3.7.2'
+  gem 'timecop'
 end

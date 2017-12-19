@@ -14,6 +14,10 @@ module AdPro
       def time_slot
         ::Adapters::Storage::ActiveRecord::TimeSlot.new
       end
+
+      def campaigns_banners
+        ::Adapters::Storage::ActiveRecord::CampaignsBanners.new
+      end
     end
 
     rescue_from ActiveRecord::RecordNotFound do
@@ -22,6 +26,11 @@ module AdPro
 
     rescue_from ActiveRecord::RecordNotUnique do
       error!('this record already exists', 409)
+    end
+
+    desc 'Get all banners bound to a campaign'
+    get '/campaigns/:id/banners' do
+      campaigns_banners.get(params[:id])
     end
 
     desc 'Get list of Campaigns.'

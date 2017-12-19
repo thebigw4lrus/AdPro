@@ -4,24 +4,24 @@ module AdPro
 
     helpers do
       def campaign
-        ::Adapters::Storage::ActiveRecord::Campaign.new
+        ::Adapters::ActiveRecord::Campaign.new
       end
 
       def banner
-        ::Adapters::Storage::ActiveRecord::Banner.new
+        ::Adapters::ActiveRecord::Banner.new
       end
 
       def time_slot
-        ::Adapters::Storage::ActiveRecord::TimeSlot.new
+        ::Adapters::ActiveRecord::TimeSlot.new
       end
 
       def ads
-        ::Adapters::Storage::ActiveRecord::Ads.new
+        ::Adapters::ActiveRecord::Ads.new
       end
 
       def campaigns_banners
-        slot_adapter = ::Adapters::Storage::ActiveRecord::TimeSlot.new
-        ::Adapters::Storage::ActiveRecord::CampaignsBanners.new(slot_adapter)
+        slot_adapter = ::Adapters::ActiveRecord::TimeSlot.new
+        ::Adapters::ActiveRecord::CampaignsBanners.new(slot_adapter)
       end
     end
 

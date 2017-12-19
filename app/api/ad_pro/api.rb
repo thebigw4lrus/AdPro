@@ -15,6 +15,10 @@ module AdPro
         ::Adapters::Storage::ActiveRecord::TimeSlot.new
       end
 
+      def ads
+        ::Adapters::Storage::ActiveRecord::Ads.new
+      end
+
       def campaigns_banners
         slot_adapter = ::Adapters::Storage::ActiveRecord::TimeSlot.new
         ::Adapters::Storage::ActiveRecord::CampaignsBanners.new(slot_adapter)
@@ -29,6 +33,11 @@ module AdPro
       error!('this record already exists', 409)
     end
 
+    desc 'Get all ads in a given time slot'
+    get '/ads/:slot' do
+      ads.get(params[:slot])
+    end
+
     desc 'Get all banners bound to a campaign'
     get '/campaigns/:id/banners' do
       campaigns_banners.get(params[:id])
@@ -37,7 +46,7 @@ module AdPro
     desc 'create assignation banners to a campaign'
     params do
       requires :id, type: Integer, desc: 'Campaign Id.'
-      requires :banners, type: Array, desc: 'Campaign id.' do
+      optional :banners, type: Array, default: [], desc: 'Campaign id.' do
         requires :banner_id, type: Integer, desc: 'Banner Id.'
         requires :time_slot, type: Integer, desc: 'Banner Time Slot.'
       end

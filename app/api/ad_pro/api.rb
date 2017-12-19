@@ -16,7 +16,8 @@ module AdPro
       end
 
       def campaigns_banners
-        ::Adapters::Storage::ActiveRecord::CampaignsBanners.new
+        slot_adapter = ::Adapters::Storage::ActiveRecord::TimeSlot.new
+        ::Adapters::Storage::ActiveRecord::CampaignsBanners.new(slot_adapter)
       end
     end
 
@@ -31,6 +32,18 @@ module AdPro
     desc 'Get all banners bound to a campaign'
     get '/campaigns/:id/banners' do
       campaigns_banners.get(params[:id])
+    end
+
+    desc 'create assignation banners to a campaign'
+    params do
+      requires :id, type: Integer, desc: 'Campaign Id.'
+      requires :banners, type: Array, desc: 'Campaign id.' do
+        requires :banner_id, type: Integer, desc: 'Banner Id.'
+        requires :time_slot, type: Integer, desc: 'Banner Time Slot.'
+      end
+    end
+    post('/campaigns/:id/banners') do
+      campaigns_banners.upsert(params[:id], params[:banners])
     end
 
     desc 'Get list of Campaigns.'

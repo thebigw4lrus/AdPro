@@ -5,6 +5,7 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
+Dir["#{Dir.pwd}/lib/**/*.rb"].each { |f| load(f) }
 
 module AdPro
   class Application < Rails::Application

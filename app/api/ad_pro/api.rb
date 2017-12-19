@@ -2,6 +2,20 @@ module AdPro
   class API < Grape::API
     format :json
 
+    helpers do
+      def campaign
+        ::Adapters::Storage::ActiveRecord::Campaign.new
+      end
+
+      def banner
+        ::Adapters::Storage::ActiveRecord::Banner.new
+      end
+
+      def time_slot
+        ::Adapters::Storage::ActiveRecord::TimeSlot.new
+      end
+    end
+
     rescue_from ActiveRecord::RecordNotFound do
       error!('record not found', 404)
     end
@@ -12,22 +26,19 @@ module AdPro
 
     desc 'Get list of Campaigns.'
     get '/campaigns' do
-      ::Campaign.all
+      campaign.all
     end
 
     desc 'Get a given campaign.'
     params { requires :id, type: Integer, desc: 'Campaign id.' }
     get '/campaigns/:id' do
-      ::Campaign.find(params[:id])
+      campaign.get(params[:id])
     end
 
     desc 'Create a campaign.'
     params { requires :name, type: String, desc: 'Campaign name.' }
     post '/campaigns' do
-      campaign = ::Campaign.new(name: params[:name])
-      campaign.save
-
-      campaign
+      campaign.create(params[:name])
     end
 
     desc 'Update a given campaign.'
@@ -36,27 +47,21 @@ module AdPro
       requires :id, type: Integer, desc: 'Campaign id.'
     end
     put '/campaigns/:id' do
-      campaign = ::Campaign.find(params[:id])
-      campaign.name = params[:name]
-
-      campaign
+      campaign.update(params[:id], params[:name])
     end
     patch '/campaigns/:id' do
-      campaign = ::Campaign.find(params[:id])
-      campaign.name = params[:name]
-
-      campaign
+      campaign.update(params[:id], params[:name])
     end
 
     desc 'Get list of banners.'
     get '/banners' do
-      ::Banner.all
+      banner.all
     end
 
     desc 'Get a given banners.'
     params { requires :id, type: Integer, desc: 'Banner id.' }
     get '/banners/:id' do
-      ::Banner.find(params[:id])
+      banner.get(params[:id])
     end
 
     desc 'Create a banner.'
@@ -65,10 +70,7 @@ module AdPro
       requires :url, type: String, desc: 'Banner url.'
     end
     post '/banners' do
-      banner = ::Banner.new(name: params[:name], url: params[:url])
-      banner.save
-
-      banner
+      banner.create(params[:name])
     end
 
     desc 'Update a given campaign.'
@@ -78,20 +80,10 @@ module AdPro
       requires :id, type: Integer, desc: 'Banner id.'
     end
     put '/banners/:id' do
-      banner = ::Banner.find(params[:id])
-      banner.name = params[:name]
-      banner.url = params[:url]
-      banner.save
-
-      banner
+      banner.update(params[:id], params[:name], params[:url])
     end
     patch '/banners/:id' do
-      banner = ::Banner.find(params[:id])
-      banner.name = params[:name]
-      banner.url = params[:url]
-      banner.save
-
-      banner
+      banner.update(params[:id], params[:name], params[:url])
     end
 
     desc 'Create a Time Slot.'
@@ -101,16 +93,7 @@ module AdPro
       requires :slot, type: Integer, desc: 'Display Hour of the banner'
     end
     post '/campaigns/:campaign_id/banners/:banner_id/time_slots/:slot' do
-      banner = ::Banner.find(params[:banner_id])
-      campaign = ::Campaign.find(params[:campaign_id])
-
-      time_slot = TimeSlot.new(slot: params[:slot],
-                               banner: banner,
-                               campaign: campaign)
-
-      time_slot.save
-
-      time_slot
+      time_slot.create(params[:slot], params[:campaign_id], params[:banner_id])
     end
 
     desc 'Delete a Time Slot.'
@@ -120,10 +103,7 @@ module AdPro
       requires :slot, type: Integer, desc: 'Display Hour of the banner'
     end
     delete '/campaigns/:campaign_id/banners/:banner_id/time_slots/:slot' do
-      time_slot = TimeSlot.find_by(slot: params[:slot],
-                                   banner_id: params[:banner_id],
-                                   campaign_id: params[:campaign_id])
-      time_slot.destroy
+      time_slot.delete(params[:slot], params[:campaign_id], params[:banner_id])
     end
   end
 end

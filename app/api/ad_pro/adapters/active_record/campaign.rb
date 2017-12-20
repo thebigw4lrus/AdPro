@@ -3,18 +3,18 @@ module AdPro
     module ActiveRecord
       class Campaign
         def all
-          ::Campaign.all
+          ::Campaign.all.map(&:as_json)
         end
 
         def get(name)
-          ::Campaign.find(name)
+          ::Campaign.find(name).as_json
         end
 
-        def create(name)
-          campaign = ::Campaign.new(name: name)
+        def create(name, id = nil)
+          campaign = ::Campaign.new(name: name, id: id)
           campaign.save
 
-          campaign
+          campaign.as_json
         end
 
         def update(id, name)
@@ -22,7 +22,7 @@ module AdPro
           campaign.name = name
           campaign.save
 
-          campaign
+          campaign.as_json
         end
       end
     end

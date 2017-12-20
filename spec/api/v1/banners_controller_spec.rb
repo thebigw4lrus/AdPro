@@ -31,14 +31,16 @@ RSpec.describe 'Banner resource' do
   describe 'POST /banners' do
     it 'returns 201 when a banner is created' do
       parameters = { name: 'banner1', url: 'http://somebanner1' }
-      post('banners/', parameters)
+      post('banners/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :created
     end
 
     it 'creates a valid banner' do
       parameters = { name: 'banner1', url: 'http://somebanner1' }
-      post('banners/', parameters)
+      post('banners/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -47,7 +49,8 @@ RSpec.describe 'Banner resource' do
 
     it 'returns 400 when no name is provided for the banner' do
       parameters = { url: 'http://somebanner1' }
-      post('banners/', parameters)
+      post('banners/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -57,7 +60,8 @@ RSpec.describe 'Banner resource' do
 
     it 'returns 400 when no url is provided for the banner' do
       parameters = { name: 'banner1' }
-      post('banners/', parameters)
+      post('banners/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -71,7 +75,8 @@ RSpec.describe 'Banner resource' do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
 
       parameters = { name: 'some_name', url: 'some_url' }
-      put('banners/1', parameters)
+      put('banners/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
     end
@@ -80,7 +85,8 @@ RSpec.describe 'Banner resource' do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
 
       parameters = { name: 'modified_name', url: 'modified_url' }
-      put('banners/1', parameters)
+      put('banners/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -90,7 +96,8 @@ RSpec.describe 'Banner resource' do
 
     it 'returns 404 if it tries to modify an unexistent banner' do
       parameters = { name: 'some_name', url: 'some_url' }
-      put('banners/1', parameters)
+      put('banners/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
     end
@@ -101,7 +108,8 @@ RSpec.describe 'Banner resource' do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
 
       parameters = { name: 'some_name', url: 'some_url' }
-      patch('banners/1', parameters)
+      patch('banners/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
     end
@@ -110,7 +118,8 @@ RSpec.describe 'Banner resource' do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
 
       parameters = { name: 'modified_name', url: 'modified_url' }
-      patch('banners/1', parameters)
+      patch('banners/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -120,7 +129,8 @@ RSpec.describe 'Banner resource' do
 
     it 'returns 404 if it tries to modify an unexistent banner' do
       parameters = { name: 'some_name', url: 'some_url' }
-      patch('banners/1', parameters)
+      patch('banners/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
     end

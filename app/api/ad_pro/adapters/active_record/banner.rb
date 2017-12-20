@@ -1,28 +1,30 @@
-module Adapters
-  module ActiveRecord
-    class Banner
-      def all
-        ::Banner.all
-      end
+module AdPro
+  module Adapters
+    module ActiveRecord
+      class Banner
+        def all
+          ::Banner.all
+        end
 
-      def get(id)
-        ::Banner.find(id)
-      end
+        def get(id)
+          ::Banner.find(id)
+        end
 
-      def create(name)
-        banner = ::Banner.new(name: name)
-        banner.save
+        def create(name)
+          banner = ::Banner.new(name: name)
+          banner.save
 
-        banner
-      end
+          banner
+        end
 
-      def update(id, name, url)
-        banner = ::Banner.find(id)
-        banner.name = name
-        banner.url = url
-        banner.save
+        def update(id, name, url)
+          banner = ::Banner.find(id)
+          banner.name = name
+          banner.url = url
+          banner.save
 
-        banner
+          banner
+        end
       end
     end
   end

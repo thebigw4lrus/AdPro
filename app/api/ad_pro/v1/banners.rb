@@ -4,7 +4,7 @@ module AdPro
       format :json
 
       helpers do
-        def banner
+        def adapter
           Adapters::ActiveRecord::Banner.new
         end
       end
@@ -19,13 +19,13 @@ module AdPro
 
       desc 'Get list of banners.'
       get '/banners' do
-        banner.all
+        adapter.all
       end
 
       desc 'Get a given banners.'
       params { requires :id, type: Integer, desc: 'Banner id.' }
       get '/banners/:id' do
-        banner.get(params[:id])
+        adapter.get(params[:id])
       end
 
       desc 'Create a banner.'
@@ -34,7 +34,7 @@ module AdPro
         requires :url, type: String, desc: 'Banner url.'
       end
       post '/banners' do
-        banner.create(params[:name])
+        adapter.create(params[:name])
       end
 
       desc 'Update a given campaign.'
@@ -44,10 +44,10 @@ module AdPro
         requires :id, type: Integer, desc: 'Banner id.'
       end
       put '/banners/:id' do
-        banner.update(params[:id], params[:name], params[:url])
+        adapter.update(params[:id], params[:name], params[:url])
       end
       patch '/banners/:id' do
-        banner.update(params[:id], params[:name], params[:url])
+        adapter.update(params[:id], params[:name], params[:url])
       end
     end
   end

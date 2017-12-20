@@ -4,7 +4,7 @@ module AdPro
       format :json
 
       helpers do
-        def campaign
+        def adapter
           Adapters::ActiveRecord::Campaign.new
         end
       end
@@ -19,19 +19,19 @@ module AdPro
 
       desc 'Get list of Campaigns.'
       get '/campaigns' do
-        campaign.all
+        adapter.all
       end
 
       desc 'Get a given campaign.'
       params { requires :id, type: Integer, desc: 'Campaign id.' }
       get '/campaigns/:id' do
-        campaign.get(params[:id])
+        adapter.get(params[:id])
       end
 
       desc 'Create a campaign.'
       params { requires :name, type: String, desc: 'Campaign name.' }
       post '/campaigns' do
-        campaign.create(params[:name])
+        adapter.create(params[:name])
       end
 
       desc 'Update a given campaign.'
@@ -40,10 +40,10 @@ module AdPro
         requires :id, type: Integer, desc: 'Campaign id.'
       end
       put '/campaigns/:id' do
-        campaign.update(params[:id], params[:name])
+        adapter.update(params[:id], params[:name])
       end
       patch '/campaigns/:id' do
-        campaign.update(params[:id], params[:name])
+        adapter.update(params[:id], params[:name])
       end
     end
   end

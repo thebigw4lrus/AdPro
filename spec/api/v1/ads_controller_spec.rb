@@ -28,5 +28,11 @@ RSpec.describe 'V1::CampaignsController' do
 
       expect(json).to eq(expected)
     end
+
+    it 'returns 409 when an invalid slot is passed' do
+      get('/ads/72')
+
+      expect(response).to have_http_status :bad_request
+    end
   end
 end

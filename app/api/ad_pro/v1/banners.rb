@@ -34,7 +34,7 @@ module AdPro
         requires :url, type: String, desc: 'Banner url.'
       end
       post '/banners' do
-        adapter.create(params[:name])
+        adapter.create(params[:name], params[:url])
       end
 
       desc 'Update a given campaign.'

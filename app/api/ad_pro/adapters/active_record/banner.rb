@@ -3,18 +3,20 @@ module AdPro
     module ActiveRecord
       class Banner
         def all
-          ::Banner.all
+          ::Banner.all.map(&:as_json)
         end
 
         def get(id)
-          ::Banner.find(id)
+          ::Banner.find(id).as_json
         end
 
-        def create(name)
-          banner = ::Banner.new(name: name)
+        def create(name, url, id = nil)
+          banner = ::Banner.new(name: name,
+                                url: url,
+                                id: id)
           banner.save
 
-          banner
+          banner.as_json
         end
 
         def update(id, name, url)
@@ -23,7 +25,7 @@ module AdPro
           banner.url = url
           banner.save
 
-          banner
+          banner.as_json
         end
       end
     end

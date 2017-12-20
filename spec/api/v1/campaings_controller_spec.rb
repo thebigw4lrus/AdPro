@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe V1::CampaignsController do
+RSpec.describe 'V1::CampaignsController' do
   describe 'GET /campagins' do
     it 'returns 200 status' do
       get('campaigns/')
@@ -31,14 +31,16 @@ RSpec.describe V1::CampaignsController do
   describe 'POST /campaigns' do
     it 'returns 201 when a campaign is created' do
       parameters = { name: 'campaign1' }
-      post('campaigns/', parameters)
+      post('campaigns/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :created
     end
 
     it 'creates a valid campaign' do
       parameters = { name: 'campaign1' }
-      post('campaigns/', parameters)
+      post('campaigns/',
+           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -60,7 +62,8 @@ RSpec.describe V1::CampaignsController do
       Campaign.create(name: 'campaign1', id: 1)
 
       parameters = { name: 'modified' }
-      put('campaigns/1', parameters)
+      put('campaigns/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
     end
@@ -69,7 +72,8 @@ RSpec.describe V1::CampaignsController do
       Campaign.create(name: 'campaign1', id: 1)
 
       parameters = { name: 'modified' }
-      put('campaigns/1', parameters)
+      put('campaigns/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -78,7 +82,8 @@ RSpec.describe V1::CampaignsController do
 
     it 'returns 404 if it tries to modify an unexistent campaign' do
       parameters = { name: 'modified' }
-      put('campaigns/1', parameters)
+      put('campaigns/1',
+          parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
     end
@@ -89,7 +94,8 @@ RSpec.describe V1::CampaignsController do
       Campaign.create(name: 'campaign1', id: 1)
 
       parameters = { name: 'modified' }
-      patch('campaigns/1', parameters)
+      patch('campaigns/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
     end
@@ -98,7 +104,8 @@ RSpec.describe V1::CampaignsController do
       Campaign.create(name: 'campaign1', id: 1)
 
       parameters = { name: 'modified' }
-      patch('campaigns/1', parameters)
+      patch('campaigns/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
 
@@ -107,7 +114,8 @@ RSpec.describe V1::CampaignsController do
 
     it 'returns 404 if it tries to modify an unexistent campaign' do
       parameters = { name: 'modified' }
-      patch('campaigns/1', parameters)
+      patch('campaigns/1',
+            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
     end

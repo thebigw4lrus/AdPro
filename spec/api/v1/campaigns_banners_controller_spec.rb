@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe V1::CampaignsController do
+RSpec.describe 'V1::CampaignsController' do
   describe 'GET /campaigns/banners' do
     before { Timecop.freeze(Date.new(2015, 10, 21)) }
     after { Timecop.return }

@@ -19,6 +19,25 @@ module AdPro
                                          campaign_id: campaign_id)
           time_slot.destroy
         end
+
+        def banners_per_slot(time_slot)
+          ::Banner.select(:'banners.id',
+                          :'banners.name',
+                          :'banners.url')
+                  .joins(:time_slots)
+                  .where(time_slots: { slot: time_slot })
+                  .map(&:as_json)
+        end
+
+        def banners_per_campaign(campaign_id)
+          ::Banner.select(:'banners.id',
+                          :'banners.name',
+                          :'banners.url',
+                          :'time_slots.slot as time_slot')
+                  .joins(:time_slots)
+                  .where(time_slots: { campaign_id: campaign_id })
+                  .map(&:as_json)
+        end
       end
     end
   end

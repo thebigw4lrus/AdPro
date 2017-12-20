@@ -2,21 +2,14 @@ module AdPro
   module Adapters
     module ActiveRecord
       class Ads
-        def get(time_slot)
-          {
-            'banners' => banners_per_slot(time_slot)
-          }
+        def initialize(time_slot_adapter)
+          @time_slot_adapter = time_slot_adapter
         end
 
-        private
-
-        def banners_per_slot(time_slot)
-          ::Banner.select(:'banners.id',
-                          :'banners.name',
-                          :'banners.url')
-                  .joins(:time_slots)
-                  .where(time_slots: { slot: time_slot })
-                  .map(&:as_json)
+        def get(time_slot)
+          {
+            'banners' => @time_slot_adapter.banners_per_slot(time_slot)
+          }
         end
       end
     end

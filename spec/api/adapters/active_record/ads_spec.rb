@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AdPro::Adapters::ActiveRecord::Ads do
   let(:time_slot_adapter) { AdPro::Adapters::ActiveRecord::TimeSlot.new }
-  let(:ads) { described_class.new }
+  let(:ads) { described_class.new(time_slot_adapter) }
 
   it 'only retrieves banners to be shown at 17:00' do
     Campaign.create(name: 'campaign1', id: 1)

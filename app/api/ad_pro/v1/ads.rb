@@ -5,7 +5,8 @@ module AdPro
 
       helpers do
         def adapter
-          Adapters::ActiveRecord::Ads.new
+          time_slot_adapter = Adapters::ActiveRecord::TimeSlot.new
+          Adapters::ActiveRecord::Ads.new(time_slot_adapter)
         end
       end
 

@@ -12,7 +12,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
       TimeSlot.create(slot: 2, banner: banner1, campaign: campaign1)
       TimeSlot.create(slot: 7, banner: banner2, campaign: campaign1)
 
-      get('campaigns/1/banners')
+      get('v1/campaigns/1/banners')
 
       expected = {
         'id' => 1,
@@ -59,7 +59,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
         ]
       }
 
-      put('campaigns/1/banners', input)
+      put('v1/campaigns/1/banners', input)
 
       expected = {
         'id' => 1,
@@ -98,7 +98,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
         'banners' => []
       }
 
-      put('campaigns/1/banners', input.to_json)
+      put('v1/campaigns/1/banners', input.to_json)
 
       expected = {
         'id' => 1,
@@ -133,7 +133,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
         ]
       }
 
-      put('campaigns/1/banners', input)
+      put('v1/campaigns/1/banners', input)
 
       expected = {
         'id' => 1,
@@ -181,7 +181,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
         ]
       }
 
-      put('campaigns/1/banners', input)
+      put('v1/campaigns/1/banners', input)
 
       expect(response).to have_http_status :bad_request
     end

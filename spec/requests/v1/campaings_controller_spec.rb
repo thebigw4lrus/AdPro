@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe AdPro::V1::Campaigns do
   describe 'GET /campagins' do
     it 'returns 200 status' do
-      get('campaigns/')
+      get('v1/campaigns/')
 
       expect(response).to have_http_status :ok
     end
 
     it 'returns an empty array when there is no campaigns' do
-      get('campaigns/')
+      get('v1/campaigns/')
 
       json = JSON.parse(response.body)
 
@@ -20,7 +20,7 @@ RSpec.describe AdPro::V1::Campaigns do
       Campaign.create(name: 'campaign1')
       Campaign.create(name: 'campaign2')
 
-      get('campaigns/')
+      get('v1/campaigns/')
 
       json = JSON.parse(response.body)
 
@@ -31,7 +31,7 @@ RSpec.describe AdPro::V1::Campaigns do
   describe 'POST /campaigns' do
     it 'returns 201 when a campaign is created' do
       parameters = { name: 'campaign1' }
-      post('campaigns/',
+      post('v1/campaigns/',
            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :created
@@ -39,7 +39,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'creates a valid campaign' do
       parameters = { name: 'campaign1' }
-      post('campaigns/',
+      post('v1/campaigns/',
            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
@@ -48,7 +48,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
 
     it 'returns 400 when no name is provided for the campaign' do
-      post('campaigns/')
+      post('v1/campaigns/')
 
       json = JSON.parse(response.body)
 
@@ -62,7 +62,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'returns 200 if it tries to modify an existent campaign' do
       parameters = { name: 'modified' }
-      put('campaigns/1',
+      put('v1/campaigns/1',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
@@ -70,7 +70,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'modifies succesfully an existing campaign' do
       parameters = { name: 'modified' }
-      put('campaigns/1',
+      put('v1/campaigns/1',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
@@ -80,7 +80,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'returns 404 if it tries to modify an unexistent campaign' do
       parameters = { name: 'modified' }
-      put('campaigns/99',
+      put('v1/campaigns/99',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
@@ -92,7 +92,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'returns 200 if it tries to modify an existent campaign' do
       parameters = { name: 'modified' }
-      patch('campaigns/1',
+      patch('v1/campaigns/1',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :ok
@@ -100,7 +100,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'modifies succesfully an existing campaign' do
       parameters = { name: 'modified' }
-      patch('campaigns/1',
+      patch('v1/campaigns/1',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       json = JSON.parse(response.body)
@@ -110,7 +110,7 @@ RSpec.describe AdPro::V1::Campaigns do
 
     it 'returns 404 if it tries to modify an unexistent campaign' do
       parameters = { name: 'modified' }
-      patch('campaigns/99',
+      patch('v1/campaigns/99',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
@@ -121,13 +121,13 @@ RSpec.describe AdPro::V1::Campaigns do
     before { Campaign.create(name: 'campaign1', id: 1) }
 
     it 'returns 200 if it tries to delete an existent campaign' do
-      delete('campaigns/1')
+      delete('v1/campaigns/1')
 
       expect(response).to have_http_status :ok
     end
 
     it 'deletes succesfully an existing campaign' do
-      delete('campaigns/1')
+      delete('v1/campaigns/1')
 
       json = JSON.parse(response.body)
 
@@ -135,7 +135,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
 
     it 'returns 404 if it tries to modify an unexistent campaign' do
-      delete('campaigns/99')
+      delete('v1/campaigns/99')
 
       expect(response).to have_http_status :not_found
     end

@@ -19,7 +19,7 @@ RSpec.describe AdPro::V1::Ads do
       allow(ip_to_time).to receive(:get).and_return(mock_time)
       allow(AdPro::IpToTime).to receive(:new).and_return(ip_to_time)
 
-      get('/ads/')
+      get('v1/ads/')
 
       expected = {
         'time_slot' => 2,

@@ -18,9 +18,11 @@ module AdPro
         end
       end
 
-      desc 'Get all ads in a time slot taken from remote'
-      get '/ads/' do
-        adapter.get(ip_to_time)
+      namespace :v1 do
+        desc 'Get all ads in a time slot taken from remote'
+        get '/ads/' do
+          adapter.get(ip_to_time)
+        end
       end
     end
   end

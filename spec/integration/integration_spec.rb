@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe AdPro::V1 do
   describe 'Integration' do
     let(:banners) do
-      get('banners/')
+      get('v1/banners/')
       JSON.parse(response.body).map do |banner|
         [banner['name'], banner['id']]
       end.to_h
     end
 
     let(:campaigns) do
-      get('campaigns/')
+      get('v1/campaigns/')
       JSON.parse(response.body).map do |campaign|
         [campaign['name'], campaign['id']]
       end.to_h
@@ -22,14 +22,14 @@ RSpec.describe AdPro::V1 do
       # Creates all banners
       banner1 = { name: 'banner1', url: 'http://somebanner1' }
       banner2 = { name: 'banner2', url: 'http://somebanner2' }
-      post('banners/',
+      post('v1/banners/',
            banner1.to_json, 'CONTENT_TYPE' => 'application/json')
-      post('banners/',
+      post('v1/banners/',
            banner2.to_json, 'CONTENT_TYPE' => 'application/json')
 
       # Create all campaigns
       parameters = { name: 'campaign1' }
-      post('campaigns/',
+      post('v1/campaigns/',
            parameters.to_json, 'CONTENT_TYPE' => 'application/json')
     end
 
@@ -42,7 +42,7 @@ RSpec.describe AdPro::V1 do
 
       # Inspect Banners attached to the campaign
       # Non-banners set up is expected
-      get("campaigns/#{campaign_id}/banners/")
+      get("v1/campaigns/#{campaign_id}/banners/")
       json = JSON.parse(response.body)
 
       expected = {
@@ -69,12 +69,12 @@ RSpec.describe AdPro::V1 do
           }
         ]
       }
-      put("campaigns/#{campaign_id}/banners",
+      put("v1/campaigns/#{campaign_id}/banners",
           input.to_json, 'CONTENT_TYPE' => 'application/json')
 
       # Inspect Banners attached to the campaign
       # Two banners at 2:00  are expected
-      get("campaigns/#{campaign_id}/banners/")
+      get("v1/campaigns/#{campaign_id}/banners/")
       json = JSON.parse(response.body)
 
       expected = {
@@ -110,12 +110,12 @@ RSpec.describe AdPro::V1 do
           }
         ]
       }
-      put("campaigns/#{campaign_id}/banners",
+      put("v1/campaigns/#{campaign_id}/banners",
           input.to_json, 'CONTENT_TYPE' => 'application/json')
 
       # Inspect Banners attached to the campaign
       # One banner at 14:00 is expected
-      get("campaigns/#{campaign_id}/banners/")
+      get("v1/campaigns/#{campaign_id}/banners/")
       json = JSON.parse(response.body)
 
       expected = {
@@ -149,12 +149,12 @@ RSpec.describe AdPro::V1 do
           }
         ]
       }
-      put("campaigns/#{campaign_id}/banners",
+      put("v1/campaigns/#{campaign_id}/banners",
           input.to_json, 'CONTENT_TYPE' => 'application/json')
 
       # Inspect Banners attached to the campaign
       # One banner at 14 and the other at 13 is expected
-      get("campaigns/#{campaign_id}/banners/")
+      get("v1/campaigns/#{campaign_id}/banners/")
       json = JSON.parse(response.body)
 
       expected = {
@@ -207,11 +207,11 @@ RSpec.describe AdPro::V1 do
           }
         ]
       }
-      put("campaigns/#{campaign_id}/banners",
+      put("v1/campaigns/#{campaign_id}/banners",
           input.to_json, 'CONTENT_TYPE' => 'application/json')
 
       # Get all ads (It will  try to get the one at 14:00)
-      get('ads/')
+      get('v1/ads/')
       json = JSON.parse(response.body)
 
       expected = {

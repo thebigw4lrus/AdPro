@@ -75,4 +75,18 @@ RSpec.describe AdPro::Adapters::ActiveRecord::Campaign do
     expect(updated_campaign).to eq(expected)
     expect(Campaign.find(1).name).to eq('new_name')
   end
+
+  it 'deletes a campaign' do
+    deleted_campaign = campaign.delete(1)
+
+    expected = {
+      'id' => 1,
+      'name' => 'campaign1',
+      'created_at' => frozen_time,
+      'updated_at' => frozen_time
+    }
+
+    expect(deleted_campaign).to eq(expected)
+    expect { Campaign.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end

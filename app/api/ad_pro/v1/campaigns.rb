@@ -37,6 +37,12 @@ module AdPro
       patch '/campaigns/:id' do
         adapter.update(params[:id], params[:name])
       end
+
+      desc 'Delete given campaign.'
+      params { requires :id, type: Integer, desc: 'Campaign id.' }
+      delete '/campaigns/:id' do
+        adapter.delete(params[:id])
+      end
     end
   end
 end

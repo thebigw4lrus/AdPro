@@ -24,6 +24,11 @@ module AdPro
 
           campaign.as_json
         end
+
+        def delete(id)
+          campaign = ::Campaign.find(id)
+          campaign.destroy.as_json
+        end
       end
     end
   end

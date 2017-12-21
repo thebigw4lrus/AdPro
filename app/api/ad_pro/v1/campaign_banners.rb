@@ -10,14 +10,6 @@ module AdPro
         end
       end
 
-      rescue_from ActiveRecord::RecordNotFound do
-        error!('record not found', 404)
-      end
-
-      rescue_from ActiveRecord::RecordNotUnique do
-        error!('this record already exists', 409)
-      end
-
       desc 'Get all banners bound to a campaign'
       get '/campaigns/:id/banners' do
         adapter.get(params[:id])

@@ -160,5 +160,30 @@ RSpec.describe 'V1::CampaignsController' do
 
       expect(json).to eq(expected)
     end
+
+    it 'returns 409 when a campaign an invalid banner is introduced' do
+      Campaign.create(name: 'campaign1', id: 1)
+      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
+      Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
+      TimeSlot.create(id: 1, banner_id: 1, slot: 2)
+
+      input = {
+        'id' => 1,
+        'banners' => [
+          {
+            'banner_id' => 1,
+            'time_slot' => 2
+          },
+          {
+            'banner_id' => 2,
+            'time_slot' => 24
+          }
+        ]
+      }
+
+      put('campaigns/1/banners', input)
+
+      expect(response).to have_http_status :bad_request
+    end
   end
 end

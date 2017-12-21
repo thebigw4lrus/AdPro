@@ -28,7 +28,10 @@ module AdPro
         requires :id, type: Integer, desc: 'Campaign Id.'
         optional :banners, type: Array, default: [], desc: 'Campaign id.' do
           requires :banner_id, type: Integer, desc: 'Banner Id.'
-          requires :time_slot, type: Integer, desc: 'Banner Time Slot.'
+          requires :time_slot,
+                   type: Integer,
+                   values: 0..23,
+                   desc: 'Banner Time Slot.'
         end
       end
       put('/campaigns/:id/banners') do

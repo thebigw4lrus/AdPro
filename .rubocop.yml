@@ -6,3 +6,5 @@ Metrics/BlockLength:
   Enabled: false
 Style/NumericLiterals:
   Enabled: false
+Style/DateTime:
+  Enabled: false

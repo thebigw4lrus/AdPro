@@ -27,7 +27,7 @@ Take into account that:
 
 ## API Design
 ### Storage
-The Data was modeled as a mono-transitive association between Campaign and Banners.  In this kind of association, one needs a third entitiy which is crucial to properly relate those two entities(TimeSlots). Time slot conceptually speaking is not more than the hour in which a banner can be shown in a given Campaign.  This transparent to the REST resources(campaigns/1/banners). The storage implementation is kept in the adapter and is not exposed to the API.
+The Data was modeled as a mono-transitive association between Campaign and Banners.  In this kind of association, one needs a third entitiy which is crucial to properly relate those two entities(TimeSlots). Time slot conceptually speaking is not more than the hour in which a banner can be shown in a given Campaign.  TimeSlot is transparent to the REST resource naming(campaigns/1/banners). The storage implementation is kept in the adapter and is not exposed to the API.
 
 For instance: a Campaign can be related to a Banner only through a TimeSlot.  Let's put as an example a campaign that wants to reach working people, when they go to lunch and when they leave office in the evening.. Such campaign would have banners with TimeSlots(hrs) = [12, 13, 14, 17, 18, 19].
 

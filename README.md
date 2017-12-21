@@ -3,7 +3,7 @@ Usage
 
 ```shell
 #CREATE CAMPAIGN AND BANNERS
-> http POST localhost:3000/campaigns/ name='christmas eve'
+> http POST localhost:3000/v1/campaigns/ name='christmas eve'
 HTTP/1.1 201 Created
 Content-Type: application/json
 Date: Thu, 21 Dec 2017 18:14:38 GMT
@@ -15,7 +15,7 @@ Date: Thu, 21 Dec 2017 18:14:38 GMT
     "updated_at": "2017-12-21T18:14:38.174Z"
 }
 
-> http POST localhost:3000/banners/ name='iphoneX' url='http://someurl'
+> http POST localhost:3000/v1/banners/ name='iphoneX' url='http://someurl'
 HTTP/1.1 201 Created
 Content-Type: application/json
 Date: Thu, 21 Dec 2017 18:17:38 GMT
@@ -28,7 +28,7 @@ Date: Thu, 21 Dec 2017 18:17:38 GMT
     "url": "http://someurl"
 }
 
-> http POST localhost:3000/banners/ name='Alexa Device' url='http://someurl2'
+> http POST localhost:3000/v1/banners/ name='Alexa Device' url='http://someurl2'
 HTTP/1.1 201 Created
 Content-Type: application/json
 Date: Thu, 21 Dec 2017 18:18:35 GMT
@@ -42,7 +42,7 @@ Date: Thu, 21 Dec 2017 18:18:35 GMT
 }
 
 #ASSIGN BANNERS TO CAMPAIGN
-> http PUT localhost:3000/campaigns/1/banners \
+> http PUT localhost:3000/v1/campaigns/1/banners \
 banners:='[{"banner_id": "1", "time_slot": "10"},\
 {"banner_id": "2","time_slot": "10"}]'
 
@@ -71,7 +71,7 @@ Date: Thu, 21 Dec 2017 18:18:35 GMT
 }
 
 #GET ALL ADS CONFIGURED 10 Hrs Berlin Time
-> http GET localhost:3000/ads
+> http GET localhost:3000/v1/ads
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Thu, 21 Dec 2017 18:33:32 GMT

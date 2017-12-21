@@ -71,9 +71,11 @@ RSpec.describe AdPro::V1::Banners do
   end
 
   describe 'PUT /banners' do
-    it 'returns 200 if it tries to modify an existent banner' do
+    before do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
+    end
 
+    it 'returns 200 if it tries to modify an existent banner' do
       parameters = { name: 'some_name', url: 'some_url' }
       put('banners/1',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
@@ -82,8 +84,6 @@ RSpec.describe AdPro::V1::Banners do
     end
 
     it 'modifies succesfully an existing banner' do
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-
       parameters = { name: 'modified_name', url: 'modified_url' }
       put('banners/1',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
@@ -95,8 +95,8 @@ RSpec.describe AdPro::V1::Banners do
     end
 
     it 'returns 404 if it tries to modify an unexistent banner' do
-      parameters = { name: 'some_name', url: 'some_url' }
-      put('banners/1',
+      parameters = { name: 'modified_name', url: 'modified_url' }
+      put('banners/99',
           parameters.to_json, 'CONTENT_TYPE' => 'application/json')
 
       expect(response).to have_http_status :not_found
@@ -104,9 +104,11 @@ RSpec.describe AdPro::V1::Banners do
   end
 
   describe 'PATCH /banners' do
-    it 'returns 200 if it tries to modify an existent banner' do
+    before do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
+    end
 
+    it 'returns 200 if it tries to modify an existent banner' do
       parameters = { name: 'some_name', url: 'some_url' }
       patch('banners/1',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
@@ -115,8 +117,6 @@ RSpec.describe AdPro::V1::Banners do
     end
 
     it 'modifies succesfully an existing banner' do
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-
       parameters = { name: 'modified_name', url: 'modified_url' }
       patch('banners/1',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
@@ -129,8 +129,32 @@ RSpec.describe AdPro::V1::Banners do
 
     it 'returns 404 if it tries to modify an unexistent banner' do
       parameters = { name: 'some_name', url: 'some_url' }
-      patch('banners/1',
+      patch('banners/99',
             parameters.to_json, 'CONTENT_TYPE' => 'application/json')
+
+      expect(response).to have_http_status :not_found
+    end
+  end
+
+  describe 'DELETE /banners' do
+    before { Banner.create(name: 'banner1', id: 1) }
+
+    it 'returns 200 if it tries to delete an existent campaign' do
+      delete('banners/1')
+
+      expect(response).to have_http_status :ok
+    end
+
+    it 'deletes succesfully an existing campaign' do
+      delete('banners/1')
+
+      json = JSON.parse(response.body)
+
+      expect(json).to include('name' => 'banner1')
+    end
+
+    it 'returns 404 if it tries to modify an unexistent campaign' do
+      delete('banners/99')
 
       expect(response).to have_http_status :not_found
     end

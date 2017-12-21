@@ -78,4 +78,19 @@ RSpec.describe AdPro::Adapters::ActiveRecord::Banner do
     expect(updated_banner).to eq(expected)
     expect(Banner.find(1).name).to eq('new_name')
   end
+
+  it 'deletes a banner' do
+    deleted_banner = banner.delete(1)
+
+    expected = {
+      'id' => 1,
+      'name' => 'banner1',
+      'url' => 'http://url1',
+      'created_at' => frozen_time,
+      'updated_at' => frozen_time
+    }
+
+    expect(deleted_banner).to eq(expected)
+    expect { Banner.find(1) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end

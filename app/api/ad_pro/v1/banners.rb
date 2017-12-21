@@ -41,6 +41,12 @@ module AdPro
       patch '/banners/:id' do
         adapter.update(params[:id], params[:name], params[:url])
       end
+
+      desc 'Delete given banner.'
+      params { requires :id, type: Integer, desc: 'Banner id.' }
+      delete '/banners/:id' do
+        adapter.delete(params[:id])
+      end
     end
   end
 end

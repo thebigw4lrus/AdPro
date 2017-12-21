@@ -27,6 +27,11 @@ module AdPro
 
           banner.as_json
         end
+
+        def delete(id)
+          banner = ::Banner.find(id)
+          banner.destroy.as_json
+        end
       end
     end
   end

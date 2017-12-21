@@ -1,3 +1,5 @@
+AdPro Plarform
+--------------------------------
 This project look forward to represent a very first version of a super simple advertisement platform. We will have campaigns that will have banners on them.
 It doesn't make sense for all campaigns to be displayed at any time of day. For example, campaigns that focus sports are more effective in the afternoon.
 
@@ -24,11 +26,14 @@ Take into account that:
 
 ## API Design
 ### Storage
-The Data was modeled as a mono-transitive association between Campaign and Banners.  In this kind of association, one needs a third entitiy which is crucial to properly relate those two entities(TimeSlots).  Time slot conceptually speaking is not more than the hour in which a banner can be shown in a given Campaign.  So a Campaign can be related to a Banner only through a TimeSlot.  Let's put as an example a campaign that wants to reach working people, when they go to lunch and when they leave office in the evening.. Such campaign would have banners with TimeSlots(hrs) = [12, 13, 14, 17, 18, 19].
+The Data was modeled as a mono-transitive association between Campaign and Banners.  In this kind of association, one needs a third entitiy which is crucial to properly relate those two entities(TimeSlots). Time slot conceptually speaking is not more than the hour in which a banner can be shown in a given Campaign.  This transparent to the REST resources(campaigns/1/banners). The storage implementation is kept in the adapter and is not exposed to the API.
+
+For instance: a Campaign can be related to a Banner only through a TimeSlot.  Let's put as an example a campaign that wants to reach working people, when they go to lunch and when they leave office in the evening.. Such campaign would have banners with TimeSlots(hrs) = [12, 13, 14, 17, 18, 19].
 
 ### API layering
 Efforts were made to maintain the storage logic decoupled from the API.  This is looking forward to balance the code weight among different domains
 making the code more readable and scalable.
+
 #### API Layer 
 4 different sub-APIS are provided: Campaign, Banner, CampaignBanners(setup of campaigns), Ads (get ads hour-based).  The first 3 are classicals REST
 designs.  The fourth one(Ads) is more like a controller resource that will take care of extracting the hour to the client and requesting the proper information

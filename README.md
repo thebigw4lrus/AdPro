@@ -70,14 +70,14 @@ Date: Thu, 21 Dec 2017 18:18:35 GMT
     "updated_at": "2017-12-21T18:14:38.000Z"
 }
 
-#GET ALL ADS CONFIGURED 9 AM Berlin Time
+#GET ALL ADS CONFIGURED 19 Hrs Berlin Time
 > http GET localhost:3000/ads
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Thu, 21 Dec 2017 18:33:32 GMT
 
 {
-    "time_slot" => 9,
+    "time_slot" => 19,
     "banners": [
         {
             "id": 1,

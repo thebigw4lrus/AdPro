@@ -21,12 +21,16 @@ RSpec.describe AdPro::Adapters::ActiveRecord::Ads do
         {
           'id' => 2,
           'name' => 'banner2',
-          'url' => 'http://url2'
+          'url' => 'http://url2',
+          'campaign_id' => 1,
+          'campaign_name' => 'campaign1'
         },
         {
           'id' => 3,
           'name' => 'banner3',
-          'url' => 'http://url3'
+          'url' => 'http://url3',
+          'campaign_id' => 1,
+          'campaign_name' => 'campaign1'
         }
       ]
     }

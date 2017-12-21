@@ -220,10 +220,13 @@ RSpec.describe AdPro::V1 do
           {
             'id' => banner1_id,
             'name' => 'banner1',
-            'url' => 'http://somebanner1'
+            'url' => 'http://somebanner1',
+            'campaign_id' => campaign_id,
+            'campaign_name' => 'campaign1'
           }
         ]
       }
+
       expect(json).to eq(expected)
     end
   end

@@ -23,8 +23,11 @@ module AdPro
         def banners_per_slot(time_slot)
           ::Banner.select(:'banners.id',
                           :'banners.name',
-                          :'banners.url')
+                          :'banners.url',
+                          :'campaigns.id as campaign_id',
+                          :'campaigns.name as campaign_name')
                   .joins(:time_slots)
+                  .joins(:campaigns)
                   .where(time_slots: { slot: time_slot })
                   .map(&:as_json)
         end

@@ -27,7 +27,9 @@ RSpec.describe AdPro::V1::Ads do
           {
             'id' => 1,
             'name' => 'banner1',
-            'url' => 'http://somebanner1'
+            'url' => 'http://somebanner1',
+            'campaign_id' => 1,
+            'campaign_name' => 'campaign1'
           }
         ]
       }

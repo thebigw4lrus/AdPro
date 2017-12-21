@@ -22,6 +22,7 @@ RSpec.describe AdPro::V1::Ads do
       get('/ads/')
 
       expected = {
+        'time_slot' => 2,
         'banners' => [
           {
             'id' => 1,

@@ -16,6 +16,7 @@ RSpec.describe AdPro::Adapters::ActiveRecord::Ads do
     TimeSlot.create(slot: 17, campaign_id: 1, banner_id: 3)
 
     expected = {
+      'time_slot' => 17,
       'banners' => [
         {
           'id' => 2,

@@ -215,6 +215,7 @@ RSpec.describe AdPro::V1 do
       json = JSON.parse(response.body)
 
       expected = {
+        'time_slot' => 14,
         'banners' => [
           {
             'id' => banner1_id,

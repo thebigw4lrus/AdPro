@@ -8,6 +8,7 @@ module AdPro
 
         def get(time_slot)
           {
+            'time_slot' => time_slot,
             'banners' => @time_slot_adapter.banners_per_slot(time_slot)
           }
         end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'V1::CampaignsController' do
+RSpec.describe AdPro::V1::Ads do
   describe 'GET /ads' do
     before do
       Timecop.freeze(Date.new(2015, 10, 21))

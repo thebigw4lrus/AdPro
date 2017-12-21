@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'V1::CampaignsController' do
+RSpec.describe AdPro::V1::Campaigns do
   describe 'GET /campagins' do
     it 'returns 200 status' do
       get('campaigns/')

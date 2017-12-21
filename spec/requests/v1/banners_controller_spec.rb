@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Banner resource' do
+RSpec.describe AdPro::V1::Banners do
   describe 'GET /banners' do
     it 'returns 200 status' do
       get('banners/')

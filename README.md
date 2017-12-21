@@ -23,6 +23,7 @@ Take into account that:
 * The application only will be operable via API.  I preferred specialize on the API, rather than create an UI that wouldn't looks good.
 * This version does not take in account fills or impressions per banner. Concepts that could be added into the code.  This time I preferred to focus in the base design of the structure.
 * A different API to translate the IP into Time was used. https://worldtimeiodeveloper.p.mashape.com was down at the moment I built the application.  However, I designed it in a way that such external API can be changed to other provider.  I strongly recommend for further versions download a DB like GeoDB and from there do the translation.  It is better performance-wise and more secure.
+* The upload of the banner image was not taken in account for this phase. Instead it is assumed that some image data bank exists.
 
 ## API Design
 ### Storage

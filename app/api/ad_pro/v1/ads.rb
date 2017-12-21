@@ -8,14 +8,19 @@ module AdPro
           time_slot_adapter = Adapters::ActiveRecord::TimeSlot.new
           Adapters::ActiveRecord::Ads.new(time_slot_adapter)
         end
+
+        def ip_to_time
+          ip = request.env['REMOTE_ADDR']
+          path = Rails.application.config.ip_to_time_server
+          date_time = IpToTime.new(ip, path).get
+
+          date_time.hour
+        end
       end
 
-      desc 'Get all ads in a given time slot'
-      params do
-        requires :slot, type: Integer, values: 0..23, desc: 'Time Slot for ads.'
-      end
-      get '/ads/:slot' do
-        adapter.get(params[:slot])
+      desc 'Get all ads in a time slot taken from remote'
+      get '/ads/' do
+        adapter.get(ip_to_time)
       end
     end
   end

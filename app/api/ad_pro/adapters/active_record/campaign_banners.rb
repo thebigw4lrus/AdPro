@@ -1,11 +1,32 @@
 module AdPro
   module Adapters
     module ActiveRecord
+      # Adapter that handles the campaign - banners relationship
+      # This will be the one for setting up a campaign
+      # ==== Interface methods
+      # * +get+ - Deliver one single campaign with banners
+      # * +upsert+ - Insert / Update a campaign with banners
       class CampaignBanners
         def initialize(time_slot_adapter)
           @slot_adapter = time_slot_adapter
         end
 
+        # Get a campign with banners
+        # ==== output example
+        #   # {
+        #   #   'id': 1,
+        #   #   'name': 'campaign',
+        #   #   'created_at': <date object>,
+        #   #   'updated_at': <date object>
+        #   #   'banners': [
+        #   #       {
+        #   #         'id': 1,
+        #   #         'name': 'banner_name',
+        #   #         'time_slot': '15',
+        #   #         'url': 'banner_url'
+        #   #       }
+        #   #    ]
+        #   # }
         def get(campaign_id)
           campaign = ::Campaign.find(campaign_id)
 
@@ -15,6 +36,22 @@ module AdPro
           json
         end
 
+        # Update/Insert a campign with banners
+        # ==== output example
+        #   # {
+        #   #   'id': 1,
+        #   #   'name': 'campaign',
+        #   #   'created_at': <date object>,
+        #   #   'updated_at': <date object>
+        #   #   'banners': [
+        #   #       {
+        #   #         'id': 1,
+        #   #         'name': 'banner_name',
+        #   #         'time_slot': '15',
+        #   #         'url': 'banner_url'
+        #   #       }
+        #   #    ]
+        #   # }
         def upsert(campaign_id, banners)
           existent_set = calculate_existent_slot_set(campaign_id)
           new_set = calculate_new_slot_set(campaign_id, banners)

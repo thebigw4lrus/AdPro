@@ -1,6 +1,9 @@
 module AdPro
   module Adapters
     module ActiveRecord
+      # Adapter that handles Time Slots
+      # no open interface, but this is used
+      # by others adapters
       class TimeSlot
         def create(slot, campaign_id, banner_id)
           banner = ::Banner.find(banner_id)

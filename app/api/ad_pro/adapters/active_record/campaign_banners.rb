@@ -33,7 +33,7 @@ module AdPro
         private
 
         def calculate_existent_slot_set(campaign_id)
-          ::TimeSlot.where(campaign_id: campaign_id).map do |record|
+          @slot_adapter.slots_per_campaign(campaign_id) do |record|
             [record.slot, record.campaign_id, record.banner_id]
           end
         end

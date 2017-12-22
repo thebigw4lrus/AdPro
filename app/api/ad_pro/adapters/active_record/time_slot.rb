@@ -20,6 +20,12 @@ module AdPro
           time_slot.destroy
         end
 
+        def slots_per_campaign(campaign_id)
+          ::TimeSlot.where(campaign_id: campaign_id).map do |record|
+            yield record
+          end
+        end
+
         def banners_per_slot(time_slot)
           ::Banner.select(:'banners.id',
                           :'banners.name',

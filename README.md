@@ -57,7 +57,7 @@ high demanded (Ad Request), so new adapters like Redis, MongoDB can be written t
 - I'm aware some corner cases validation-wise can be still need polish.
 ### The ugly
 - Error handling can be improved
-- Rails is overkill to host this project. Something simpler could be used. (No time again)
+- Rails is overkill to host this project. Something simpler could be used.
 
 ## Technology Stack
 - ruby 2.3.3

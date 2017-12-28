@@ -53,7 +53,7 @@ high demanded (Ad Request), so new adapters like Redis, MongoDB can be written t
 - Unit Test / Integration Test
 ### The bad
 - No time to implement security :(
-- Requests tests are done against the DB. The adapter's one too. Ideally the requests tests should mock the adapter (next version ;))
+- Requests tests are done against the DB. The adapter's one too. According with this design, the adapters should talk with the DB, and the request themselves should talk with the adapter, so testing the requests against the DB is an overkill(they should be tested mocking the adapter responses). This represents a coupling point (next version ;))
 - I'm aware some corner cases validation-wise can be still need polish.
 ### The ugly
 - Error handling can be improved

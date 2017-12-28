@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AdPro::V1::Banners do
-  describe 'GET /banners' do
+  context 'GET /banners' do
     it 'returns 200 status' do
       get('v1/banners/')
 
@@ -28,7 +28,7 @@ RSpec.describe AdPro::V1::Banners do
     end
   end
 
-  describe 'POST /banners' do
+  context 'POST /banners' do
     it 'returns 201 when a banner is created' do
       parameters = { name: 'banner1', url: 'http://somebanner1' }
       post('v1/banners/',
@@ -70,7 +70,7 @@ RSpec.describe AdPro::V1::Banners do
     end
   end
 
-  describe 'PUT /banners' do
+  context 'PUT /banners' do
     before do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
     end
@@ -103,7 +103,7 @@ RSpec.describe AdPro::V1::Banners do
     end
   end
 
-  describe 'PATCH /banners' do
+  context 'PATCH /banners' do
     before do
       Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
     end
@@ -136,7 +136,7 @@ RSpec.describe AdPro::V1::Banners do
     end
   end
 
-  describe 'DELETE /banners' do
+  context 'DELETE /banners' do
     before { Banner.create(name: 'banner1', id: 1) }
 
     it 'returns 200 if it tries to delete an existent campaign' do

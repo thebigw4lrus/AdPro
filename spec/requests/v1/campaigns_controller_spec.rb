@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AdPro::V1::Campaigns do
-  describe 'GET /campagins' do
+  context 'GET /campagins' do
     it 'returns 200 status' do
       get('v1/campaigns/')
 
@@ -28,7 +28,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
   end
 
-  describe 'POST /campaigns' do
+  context 'POST /campaigns' do
     it 'returns 201 when a campaign is created' do
       parameters = { name: 'campaign1' }
       post('v1/campaigns/',
@@ -57,7 +57,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
   end
 
-  describe 'PUT /campaigns' do
+  context 'PUT /campaigns' do
     before { Campaign.create(name: 'campaign1', id: 1) }
 
     it 'returns 200 if it tries to modify an existent campaign' do
@@ -87,7 +87,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
   end
 
-  describe 'PATCH /campaigns' do
+  context 'PATCH /campaigns' do
     before { Campaign.create(name: 'campaign1', id: 1) }
 
     it 'returns 200 if it tries to modify an existent campaign' do
@@ -117,7 +117,7 @@ RSpec.describe AdPro::V1::Campaigns do
     end
   end
 
-  describe 'DELETE /campaigns' do
+  context 'DELETE /campaigns' do
     before { Campaign.create(name: 'campaign1', id: 1) }
 
     it 'returns 200 if it tries to delete an existent campaign' do

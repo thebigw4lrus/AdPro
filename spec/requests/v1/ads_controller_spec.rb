@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AdPro::V1::Ads do
-  describe 'GET /ads' do
+  context 'GET /ads' do
     before do
       Timecop.freeze(Date.new(2015, 10, 21))
 

@@ -1,16 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe AdPro::V1::CampaignBanners do
-  describe 'GET /campaigns/banners' do
-    before { Timecop.freeze(Date.new(2015, 10, 21)) }
-    after { Timecop.return }
+  before do
+    Timecop.freeze(Date.new(2015, 10, 21))
 
+    Campaign.create(name: 'campaign1', id: 1)
+    Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
+    Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
+  end
+
+  after { Timecop.return }
+
+  context 'GET /campaigns/banners' do
     it 'retrieves a list a banners per campaign' do
-      campaign1 = Campaign.create(name: 'campaign1', id: 1)
-      banner1 = Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-      banner2 = Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
-      TimeSlot.create(slot: 2, banner: banner1, campaign: campaign1)
-      TimeSlot.create(slot: 7, banner: banner2, campaign: campaign1)
+      TimeSlot.create(slot: 2, banner_id: 1, campaign_id: 1)
+      TimeSlot.create(slot: 7, banner_id: 2, campaign_id: 1)
 
       get('v1/campaigns/1/banners')
 
@@ -39,12 +43,10 @@ RSpec.describe AdPro::V1::CampaignBanners do
 
       expect(json).to eq(expected)
     end
+  end
 
+  context 'PUT /campaigns/banners' do
     it 'update banners assignation when there is no previous setup' do
-      Campaign.create(name: 'campaign1', id: 1)
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-      Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
-
       input = {
         'id' => 1,
         'banners' => [
@@ -88,9 +90,6 @@ RSpec.describe AdPro::V1::CampaignBanners do
     end
 
     it 'update banners assignation when all banners are removed' do
-      Campaign.create(name: 'campaign1', id: 1)
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-      Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
       TimeSlot.create(id: 1, banner_id: 1, slot: 7)
 
       input = {
@@ -114,9 +113,6 @@ RSpec.describe AdPro::V1::CampaignBanners do
     end
 
     it 'update banners assignation when banners are updated' do
-      Campaign.create(name: 'campaign1', id: 1)
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-      Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
       TimeSlot.create(id: 1, banner_id: 1, slot: 2)
 
       input = {
@@ -161,11 +157,9 @@ RSpec.describe AdPro::V1::CampaignBanners do
       expect(json).to eq(expected)
     end
 
-    it 'returns 409 when a campaign an invalid banner is introduced' do
-      Campaign.create(name: 'campaign1', id: 1)
-      Banner.create(name: 'banner1', url: 'http://somebanner1', id: 1)
-      Banner.create(name: 'banner2', url: 'http://somebanner2', id: 2)
+    it 'returns 409 when a campaign an invalid banner is introduced with invalid slot' do
       TimeSlot.create(id: 1, banner_id: 1, slot: 2)
+      invalid_slot = 24
 
       input = {
         'id' => 1,
@@ -176,7 +170,7 @@ RSpec.describe AdPro::V1::CampaignBanners do
           },
           {
             'banner_id' => 2,
-            'time_slot' => 24
+            'time_slot' => invalid_slot
           }
         ]
       }

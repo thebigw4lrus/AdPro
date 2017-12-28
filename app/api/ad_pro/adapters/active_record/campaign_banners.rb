@@ -7,6 +7,13 @@ module AdPro
       # * +get+ - Deliver one single campaign with banners
       # * +upsert+ - Insert / Update a campaign with banners
       class CampaignBanners
+        # Assigns TimeSlot adapter
+        # This instance will be used
+        # to operate all about TimeSlot
+        # === TimeSlot Interface methods
+        # * +banners_per_campaign+ - Get banners per campaign
+        # * +create+ - create a timeslot banner/campaign
+        # * +delete+ - delete  timeslot banner/campaign
         def initialize(time_slot_adapter)
           @slot_adapter = time_slot_adapter
         end
